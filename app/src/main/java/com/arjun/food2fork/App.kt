@@ -7,7 +7,7 @@ import com.arjun.food2fork.di.application.DaggerApplicationComponent
 
 class App : Application() {
 
-    private val applicationComponent: ApplicationComponent by lazy {
+    val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
             .applicationModule(ApplicationModule(this))
             .build()
