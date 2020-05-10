@@ -1,9 +1,9 @@
 package com.arjun.food2fork
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.arjun.food2fork.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

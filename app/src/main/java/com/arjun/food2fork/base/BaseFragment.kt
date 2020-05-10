@@ -1,10 +1,11 @@
-package com.arjun.food2fork
+package com.arjun.food2fork.base
 
 import androidx.fragment.app.Fragment
+import com.arjun.food2fork.App
 import com.arjun.food2fork.di.controller.ControllerComponent
 import com.arjun.food2fork.di.controller.ControllerModule
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment() : Fragment() {
 
     val controllerComponent: ControllerComponent by lazy {
         (requireActivity().application as App).applicationComponent
