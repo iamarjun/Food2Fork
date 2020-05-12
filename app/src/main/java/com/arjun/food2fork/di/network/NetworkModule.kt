@@ -15,16 +15,16 @@ class NetworkModule {
 
     @ApplicationScope
     @Provides
-    fun providesOkhttpClient(): OkHttpClient {
+    fun providesOkhttpClientBuilder(): OkHttpClient.Builder {
         return OkHttpClient().newBuilder()
-            .build()
+
     }
 
     @ApplicationScope
     @Provides
-    fun provideRetrofitBuilder(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofitBuilder(okHttpClientBuilder: OkHttpClient.Builder): Retrofit {
         return Retrofit.Builder()
-            .client(okHttpClient)
+            .client(okHttpClientBuilder.build())
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
