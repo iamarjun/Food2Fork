@@ -19,7 +19,7 @@ data class Recipe(
     @Json(name = "recipe_id")
     var recipeId: String?,
     @Json(name = "social_rank")
-    var socialRank: Int?,
+    var socialRank: Float?,
     @Json(name = "source_url")
     var sourceUrl: String?,
     @Json(name = "title")
