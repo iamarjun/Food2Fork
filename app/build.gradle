@@ -56,6 +56,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
+    //Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     //Call Adapter
     implementation 'com.github.haroldadmin:NetworkResponseAdapter:4.0.0'
 

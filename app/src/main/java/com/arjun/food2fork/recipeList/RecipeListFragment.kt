@@ -1,7 +1,6 @@
 package com.arjun.food2fork.recipeList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
+import timber.log.Timber
 
 class RecipeListFragment : BaseFragment() {
 
@@ -35,14 +35,14 @@ class RecipeListFragment : BaseFragment() {
 
         viewModel.recipeList.observe(viewLifecycleOwner) {
             it.forEach { recipe ->
-                Log.d("RecipeListFragment", recipe.title)
+                Timber.d(recipe.title)
             }
         }
         viewModel.networkState.observe(viewLifecycleOwner) {
-            Log.d("RecipeListFragment", it.toString())
+            Timber.d(it.toString())
         }
         viewModel.refreshState.observe(viewLifecycleOwner) {
-            Log.d("RecipeListFragment", it.toString())
+            Timber.d(it.toString())
         }
     }
 
