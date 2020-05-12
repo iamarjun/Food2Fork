@@ -6,10 +6,8 @@ import androidx.paging.PageKeyedDataSource
 import com.arjun.food2fork.RestApi
 import com.arjun.food2fork.model.Recipe
 import com.haroldadmin.cnradapter.NetworkResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import timber.log.Timber
 
 class RecipeDataSource(private val query: String, private val restApi: RestApi) :
     PageKeyedDataSource<Int, Recipe>() {
@@ -65,7 +63,7 @@ class RecipeDataSource(private val query: String, private val restApi: RestApi) 
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Recipe>) {
-        coroutineScope.launch {
+        coroutineScope.launch(Dispatchers.IO) {
             _networkState.postValue(NetworkState.LOADING)
             when (val list = restApi.searchRecipe(query, params.key.toString())) {
                 is NetworkResponse.Success -> {

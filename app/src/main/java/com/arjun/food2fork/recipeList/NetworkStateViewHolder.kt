@@ -20,12 +20,11 @@ class NetworkStateViewHolder internal constructor(itemView: View) : RecyclerView
             when (it.status) {
                 Status.FAILED -> {
                     loadingIndicator?.visibility = View.GONE
-                    errorMessage?.text = "Failed, Try Again"
+                    errorMessage?.text = "Try Again"
                     errorMessage?.visibility = View.VISIBLE
                 }
                 Status.RUNNING -> {
                     loadingIndicator?.visibility = View.VISIBLE
-                    errorMessage?.text = "Loading..."
                     errorMessage?.visibility = View.VISIBLE
                 }
                 else -> errorMessage?.visibility = View.GONE

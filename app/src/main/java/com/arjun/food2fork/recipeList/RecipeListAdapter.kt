@@ -4,11 +4,15 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.ImageLoader
 import com.arjun.food2fork.R
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.repositories.NetworkState
 
-class RecipeListAdapter(private val interactions: Interaction?) :
+class RecipeListAdapter(
+    private val imageLoader: ImageLoader,
+    private val interaction: Interaction?
+) :
     PagedListAdapter<Recipe, RecyclerView.ViewHolder>(diffCallback) {
 
     private var networkState: NetworkState? = null
@@ -16,7 +20,7 @@ class RecipeListAdapter(private val interactions: Interaction?) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType) {
-            R.layout.recipe_item -> RecipeListViewHolder.create(parent)
+            R.layout.recipe_item -> RecipeListViewHolder.create(parent, imageLoader, interaction)
             R.layout.network_state_item -> NetworkStateViewHolder.create(parent)
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
@@ -24,10 +28,7 @@ class RecipeListAdapter(private val interactions: Interaction?) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.recipe_item -> (holder as RecipeListViewHolder).apply {
-                bind(getItem(position))
-                setInteractionListener(interactions)
-            }
+            R.layout.recipe_item -> (holder as RecipeListViewHolder).bind(getItem(position))
             R.layout.network_state_item -> (holder as NetworkStateViewHolder).bind(networkState)
         }
     }
