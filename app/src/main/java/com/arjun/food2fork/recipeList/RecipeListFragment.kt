@@ -14,6 +14,7 @@ import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
 import com.arjun.food2fork.databinding.FragmentRecipeListBinding
 import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
 import timber.log.Timber
 import javax.inject.Inject
@@ -59,7 +60,7 @@ class RecipeListFragment : BaseFragment() {
 
         recipeList.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.HORIZONTAL))
+            addItemDecoration(SpacingItemDecorator(12))
             adapter = recipeAdapter
         }
 

@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.request.LoadRequest
 import coil.size.Scale
+import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 import com.arjun.food2fork.R
 import com.arjun.food2fork.model.Recipe
 import kotlinx.android.synthetic.main.recipe_item.view.*
@@ -32,8 +34,8 @@ class RecipeListViewHolder(
             }
 
             val request = LoadRequest.Builder(itemView.context)
+                .transformations(RoundedCornersTransformation(4f))
                 .data(recipe.imageUrl)
-                .scale(Scale.FIT)
                 .crossfade(true)
                 .target(image)
                 .build()
