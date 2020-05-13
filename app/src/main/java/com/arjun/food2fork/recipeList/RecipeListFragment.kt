@@ -24,9 +24,6 @@ import javax.inject.Inject
 
 class RecipeListFragment : BaseFragment() {
 
-    @Inject
-    internal lateinit var imageLoader: ImageLoader
-
     private val binding: FragmentRecipeListBinding by viewBinding(FragmentRecipeListBinding::bind)
 
     private lateinit var viewModel: RecipeListViewModel

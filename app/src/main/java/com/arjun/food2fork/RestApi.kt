@@ -11,7 +11,7 @@ interface RestApi {
 
     @GET("get")
     suspend fun getRecipe(
-        @Query("rId") rId: Int
+        @Query("rId") rId: String
     ): NetworkResponse<GetRecipe, Error>
 
     @GET("search")
