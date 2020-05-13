@@ -17,7 +17,7 @@ interface RestApi {
     @GET("search")
     suspend fun searchRecipe(
         @Query("q") query: String,
-        @Query("page") page: String
+        @Query("page") page: Int
     ): NetworkResponse<SearchRecipe, Error>
 
 }

@@ -13,6 +13,7 @@ class RecipeRepository @Inject constructor(private val restApi: RestApi) {
         val factory = RecipeDataSourceFactory(query, restApi)
 
         val config = PagedList.Config.Builder()
+            .setPageSize(30)
             .setEnablePlaceholders(false)
             .build()
         val livePageListBuilder = LivePagedListBuilder(factory, config).build()

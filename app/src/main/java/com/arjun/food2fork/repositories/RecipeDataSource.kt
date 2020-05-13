@@ -63,9 +63,9 @@ class RecipeDataSource(private val query: String, private val restApi: RestApi) 
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Recipe>) {
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch {
             _networkState.postValue(NetworkState.LOADING)
-            when (val list = restApi.searchRecipe(query, params.key.toString())) {
+            when (val list = restApi.searchRecipe(query, params.key)) {
                 is NetworkResponse.Success -> {
                     // Handle Success
                     retry = null
@@ -100,7 +100,7 @@ class RecipeDataSource(private val query: String, private val restApi: RestApi) 
 
     companion object {
 
-        private const val PAGE = "1"
+        private const val PAGE = 1
     }
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +31,7 @@ class RecipeListFragment : BaseFragment() {
     private lateinit var viewModel: RecipeListViewModel
     private lateinit var recipeAdapter: RecipeListAdapter
     private lateinit var recipeList: RecyclerView
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         controllerComponent.inject(this)
@@ -51,10 +53,21 @@ class RecipeListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recipeList = binding.recipeList
+        searchView = binding.search
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { viewModel.searchRecipe(it) }
+                return false
+            }
+        })
 
         recipeAdapter = RecipeListAdapter(imageLoader, object: Interaction {
             override fun onItemSelected(position: Int, item: Recipe) {
-                Timber.d(item.title)
+                Timber.d("${item.title} at $position")
             }
         })
 
