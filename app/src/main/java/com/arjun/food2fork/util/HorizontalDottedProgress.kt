@@ -20,7 +20,7 @@ class HorizontalDottedProgress : View {
     private var mDotRadius = 1
 
     // Bounced Dot Radius
-    private var mBigDotRadius = 4
+    private var mBigDotRadius = 2
 
     private val paint = Paint()
 
