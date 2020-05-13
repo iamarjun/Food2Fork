@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/recipeListFragment">
+    app:startDestination="@id/recipeCategoryFragment">
 
     <fragment
         android:id="@+id/recipeListFragment"
@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_recipeListFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <argument
+            android:name="searchQuery"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
@@ -20,5 +23,13 @@
             android:name="recipeId"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeCategoryFragment"
+        android:name="com.arjun.food2fork.recipeCategory.RecipeCategoryFragment"
+        android:label="RecipeCategoryFragment" >
+        <action
+            android:id="@+id/action_recipeCategoryFragment_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
     </fragment>
 </navigation>
