@@ -34,7 +34,7 @@ class RecipeListFragment : BaseFragment() {
     private lateinit var recipeList: RecyclerView
     private lateinit var searchView: SearchView
 
-    private var isRecipeListAdapterSet = false
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         controllerComponent.inject(this)
@@ -83,7 +83,7 @@ class RecipeListFragment : BaseFragment() {
         recipeCategoryAdapter = RecipeCategoryAdapter(Constants.getCategoryList(), imageLoader,
             object : Interaction {
                 override fun onItemSelected(position: Int, item: Recipe) {
-                    isRecipeListAdapterSet = true
+                    callback.isEnabled = true
                     recipeList.adapter = recipeAdapter
                     item.title?.let {
                         viewModel.searchRecipe(it)
@@ -102,6 +102,20 @@ class RecipeListFragment : BaseFragment() {
         viewModel.refreshState.observe(viewLifecycleOwner) {
             recipeAdapter.setNetworkState(it)
         }
+
+        /**
+         * Custom back press behaviour
+         */
+
+        callback = object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                recipeList.adapter = recipeCategoryAdapter
+                isEnabled = false
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
     }
 
 }
