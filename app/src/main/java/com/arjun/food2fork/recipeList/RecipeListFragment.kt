@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
@@ -15,6 +15,7 @@ import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
 import com.arjun.food2fork.databinding.FragmentRecipeListBinding
 import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.util.Constants
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
 import timber.log.Timber
@@ -27,11 +28,13 @@ class RecipeListFragment : BaseFragment() {
 
     private val binding: FragmentRecipeListBinding by viewBinding(FragmentRecipeListBinding::bind)
 
-
     private lateinit var viewModel: RecipeListViewModel
     private lateinit var recipeAdapter: RecipeListAdapter
+    private lateinit var recipeCategoryAdapter: RecipeCategoryAdapter
     private lateinit var recipeList: RecyclerView
     private lateinit var searchView: SearchView
+
+    private var isRecipeListAdapterSet = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         controllerComponent.inject(this)
@@ -59,23 +62,36 @@ class RecipeListFragment : BaseFragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { viewModel.searchRecipe(it) }
                 return false
             }
         })
 
-        recipeAdapter = RecipeListAdapter(imageLoader, object: Interaction {
+        recipeList.apply {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            addItemDecoration(SpacingItemDecorator(12))
+        }
+
+        recipeAdapter = RecipeListAdapter(imageLoader, object : Interaction {
             override fun onItemSelected(position: Int, item: Recipe) {
                 Timber.d("${item.title} at $position")
             }
         })
 
-        recipeList.apply {
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            addItemDecoration(SpacingItemDecorator(12))
-            adapter = recipeAdapter
-        }
+        recipeCategoryAdapter = RecipeCategoryAdapter(Constants.getCategoryList(), imageLoader,
+            object : Interaction {
+                override fun onItemSelected(position: Int, item: Recipe) {
+                    isRecipeListAdapterSet = true
+                    recipeList.adapter = recipeAdapter
+                    item.title?.let {
+                        viewModel.searchRecipe(it)
+                    }
+                }
+            })
+
+        recipeList.adapter = recipeCategoryAdapter
 
         viewModel.recipeList.observe(viewLifecycleOwner) {
             recipeAdapter.submitList(it)
@@ -87,6 +103,5 @@ class RecipeListFragment : BaseFragment() {
             recipeAdapter.setNetworkState(it)
         }
     }
-
 
 }
