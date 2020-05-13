@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
@@ -77,6 +78,8 @@ class RecipeListFragment : BaseFragment() {
         recipeAdapter = RecipeListAdapter(imageLoader, object : Interaction {
             override fun onItemSelected(position: Int, item: Recipe) {
                 Timber.d("${item.title} at $position")
+                val action = RecipeListFragmentDirections.actionRecipeListFragmentToRecipeDetailFragment(item.recipeId)
+                requireView().findNavController().navigate(action)
             }
         })
 

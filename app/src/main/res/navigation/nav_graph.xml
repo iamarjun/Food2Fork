@@ -7,5 +7,18 @@
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.arjun.food2fork.recipeList.RecipeListFragment"
-        android:label="RecipeListFragment" />
+        android:label="RecipeListFragment" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.arjun.food2fork.recipeDetail.RecipeDetailFragment"
+        android:label="RecipeDetailFragment" >
+        <argument
+            android:name="recipeId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
