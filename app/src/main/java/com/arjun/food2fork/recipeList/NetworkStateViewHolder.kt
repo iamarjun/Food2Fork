@@ -9,22 +9,23 @@ import com.arjun.food2fork.repositories.NetworkState
 import com.arjun.food2fork.repositories.Status
 import kotlinx.android.synthetic.main.network_state_item.view.*
 
-class NetworkStateViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class NetworkStateViewHolder internal constructor(itemView: View) :
+    RecyclerView.ViewHolder(itemView) {
 
     private var errorMessage = itemView.error_msg
-    private var loadingIndicator = itemView.progress_bar
+    private var loadingIndicator = itemView.loader
 
     fun bind(networkState: NetworkState?) {
 
         networkState?.let {
             when (it.status) {
                 Status.FAILED -> {
-                    loadingIndicator?.visibility = View.GONE
+                    progressVisibility(false)
                     errorMessage?.text = "Try Again"
                     errorMessage?.visibility = View.VISIBLE
                 }
                 Status.RUNNING -> {
-                    loadingIndicator?.visibility = View.VISIBLE
+                    progressVisibility(true)
                     errorMessage?.visibility = View.VISIBLE
                 }
                 else -> errorMessage?.visibility = View.GONE
@@ -33,10 +34,19 @@ class NetworkStateViewHolder internal constructor(itemView: View) : RecyclerView
 
     }
 
+    private fun progressVisibility(boolean: Boolean) {
+        if (boolean) {
+            loadingIndicator?.visibility = View.VISIBLE
+        } else {
+            loadingIndicator?.visibility = View.GONE
+        }
+    }
+
     companion object {
 
         fun create(parent: ViewGroup): NetworkStateViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.network_state_item, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.network_state_item, parent, false)
             return NetworkStateViewHolder(view)
         }
     }
