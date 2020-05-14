@@ -1,9 +1,10 @@
-package com.arjun.food2fork.recipeList
+package com.arjun.food2fork.recipeCategory
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.recipeList.Interaction
 
 class RecipeCategoryAdapter(
     private val list: List<Recipe>,
@@ -12,7 +13,11 @@ class RecipeCategoryAdapter(
 ) : RecyclerView.Adapter<RecipeCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeCategoryViewHolder {
-        return RecipeCategoryViewHolder.create(parent, imageLoader, interaction)
+        return RecipeCategoryViewHolder.create(
+            parent,
+            imageLoader,
+            interaction
+        )
     }
 
     override fun getItemCount(): Int = list.size

@@ -1,4 +1,4 @@
-package com.arjun.food2fork.recipeList
+package com.arjun.food2fork.recipeCategory
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import coil.request.LoadRequest
 import coil.transform.CircleCropTransformation
 import com.arjun.food2fork.R
 import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.recipeList.Interaction
 import kotlinx.android.synthetic.main.recipe_category_item.view.*
 
 class RecipeCategoryViewHolder(
@@ -53,7 +54,11 @@ class RecipeCategoryViewHolder(
         ): RecipeCategoryViewHolder {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.recipe_category_item, parent, false)
-            return RecipeCategoryViewHolder(view, imageLoader, interaction)
+            return RecipeCategoryViewHolder(
+                view,
+                imageLoader,
+                interaction
+            )
         }
     }
 
