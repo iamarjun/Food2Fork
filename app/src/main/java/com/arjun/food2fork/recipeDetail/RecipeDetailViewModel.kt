@@ -7,7 +7,6 @@ import androidx.lifecycle.switchMap
 import com.arjun.food2fork.RestApi
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.model.GetRecipe
-import com.arjun.food2fork.model.Recipe
 import com.haroldadmin.cnradapter.NetworkResponse.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import javax.inject.Inject

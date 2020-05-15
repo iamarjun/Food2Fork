@@ -8,11 +8,9 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.request.LoadRequest
-import coil.size.Scale
-import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.arjun.food2fork.R
-import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.model.network.NetworkRecipe
 import kotlinx.android.synthetic.main.recipe_item.view.*
 
 class RecipeListViewHolder(
@@ -27,7 +25,7 @@ class RecipeListViewHolder(
     private var socialScore: AppCompatTextView = itemView.recipe_social_rating
     private var image: AppCompatImageView = itemView.recipe_image
 
-    fun bind(item: Recipe?) {
+    fun bind(item: NetworkRecipe?) {
         item?.let {recipe ->
             itemView.setOnClickListener {
                 interaction?.onItemSelected(adapterPosition, recipe)

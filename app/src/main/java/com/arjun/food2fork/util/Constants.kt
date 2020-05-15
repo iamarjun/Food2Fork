@@ -1,7 +1,7 @@
 package com.arjun.food2fork.util
 
 import android.net.Uri
-import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.model.network.NetworkRecipe
 
 object Constants {
 
@@ -29,9 +29,9 @@ object Constants {
         "italian"
     )
 
-    fun getCategoryList(): List<Recipe> {
+    fun getCategoryList(): List<NetworkRecipe> {
         return DEFAULT_SEARCH_CATEGORIES.zip(DEFAULT_SEARCH_CATEGORY_IMAGES) { name, image ->
-            Recipe(
+            NetworkRecipe(
                 id = null,
                 imageUrl = Uri.parse("android.resource://com.arjun.food2fork/drawable/${image}")
                     .toString(),

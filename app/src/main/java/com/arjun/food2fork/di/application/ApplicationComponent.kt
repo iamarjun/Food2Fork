@@ -3,6 +3,7 @@ package com.arjun.food2fork.di.application
 import android.app.Application
 import com.arjun.food2fork.di.controller.ControllerComponent
 import com.arjun.food2fork.di.controller.ControllerModule
+import com.arjun.food2fork.di.database.DatabaseModule
 import com.arjun.food2fork.di.imageLoader.ImageLoaderModule
 import com.arjun.food2fork.di.network.NetworkModule
 import com.arjun.food2fork.di.viewModel.ViewModelModule
@@ -14,7 +15,8 @@ import dagger.Component
         ApplicationModule::class,
         NetworkModule::class,
         ViewModelModule::class,
-        ImageLoaderModule::class
+        ImageLoaderModule::class,
+        DatabaseModule::class
     ]
 )
 interface ApplicationComponent {
