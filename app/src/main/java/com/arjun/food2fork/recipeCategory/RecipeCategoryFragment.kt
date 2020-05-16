@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
 import com.arjun.food2fork.databinding.FragmentRecipeCategoryBinding
-import com.arjun.food2fork.model.network.NetworkRecipe
+import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.recipeList.Interaction
 import com.arjun.food2fork.util.Constants
 import com.arjun.food2fork.util.SpacingItemDecorator
@@ -46,7 +46,7 @@ class RecipeCategoryFragment : BaseFragment() {
             RecipeCategoryAdapter(
                 Constants.getCategoryList(), imageLoader,
                 object : Interaction {
-                    override fun onItemSelected(position: Int, item: NetworkRecipe) {
+                    override fun onItemSelected(position: Int, item: Recipe) {
                         val action =
                             RecipeCategoryFragmentDirections.actionRecipeCategoryFragmentToRecipeListFragment(
                                 item.title!!

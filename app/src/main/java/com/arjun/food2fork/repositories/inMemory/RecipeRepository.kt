@@ -4,13 +4,13 @@ import androidx.lifecycle.Transformations.switchMap
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.arjun.food2fork.RestApi
-import com.arjun.food2fork.model.network.NetworkRecipe
+import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.repositories.Listing
 import javax.inject.Inject
 
 class RecipeRepository @Inject constructor(private val restApi: RestApi) {
 
-    fun recipeList(query: String): Listing<NetworkRecipe> {
+    fun recipeList(query: String): Listing<Recipe> {
         val factory =
             RecipeDataSourceFactory(
                 query,

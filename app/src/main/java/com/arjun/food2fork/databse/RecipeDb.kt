@@ -2,15 +2,18 @@ package com.arjun.food2fork.databse
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.arjun.food2fork.model.network.NetworkRecipe
+import androidx.room.TypeConverters
+import com.arjun.food2fork.model.Recipe
 
 @Database(
-    entities = [NetworkRecipe::class],
+    entities = [Recipe::class],
     exportSchema = false,
-    version = 1
+    version = 2
 )
-abstract class RecipeDb: RoomDatabase() {
+@TypeConverters(RecipeTypeConverter::class)
+abstract class RecipeDb : RoomDatabase() {
     abstract val recipeDao: RecipeDao
+
     companion object {
         const val DATABASE_NAME = "recipe-db"
     }

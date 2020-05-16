@@ -10,10 +10,11 @@ import dagger.Provides
 
 @Module
 class DatabaseModule {
-
-    @ApplicationScope
     @Provides
-    fun provideDatabase(application: Application): RoomDatabase =
+    @ApplicationScope
+    fun provideDatabase(application: Application): RecipeDb =
         Room.databaseBuilder(application, RecipeDb::class.java, RecipeDb.DATABASE_NAME)
+            .addMigrations()
+            .fallbackToDestructiveMigration()
             .build()
 }

@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.arjun.food2fork.R
-import com.arjun.food2fork.model.network.NetworkRecipe
+import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.repositories.NetworkState
 
 class RecipeListAdapter(
     private val imageLoader: ImageLoader,
     private val interaction: Interaction?
 ) :
-    PagedListAdapter<NetworkRecipe, RecyclerView.ViewHolder>(diffCallback) {
+    PagedListAdapter<Recipe, RecyclerView.ViewHolder>(diffCallback) {
 
     private var networkState: NetworkState? = null
 
@@ -79,13 +79,13 @@ class RecipeListAdapter(
     }
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<NetworkRecipe>() {
+        private val diffCallback = object : DiffUtil.ItemCallback<Recipe>() {
 
-            override fun areItemsTheSame(oldItem: NetworkRecipe, newItem: NetworkRecipe): Boolean {
+            override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: NetworkRecipe, newItem: NetworkRecipe): Boolean {
+            override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
                 return oldItem == newItem
             }
         }

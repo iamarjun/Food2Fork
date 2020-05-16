@@ -60,13 +60,13 @@ class RecipeDetailFragment : BaseFragment() {
         ingredients = binding.recipeIngredients
 
         viewModel.recipe.observe(viewLifecycleOwner) {
-            collapsingToolbar.title = it.networkRecipe?.title
-            ingredients.text = it.networkRecipe?.ingredients?.joinToString(separator = "\n")
-            socialRank.text = it.networkRecipe?.socialRank.toString()
+            collapsingToolbar.title = it.recipe?.title
+//            ingredients.text = it.recipe?.ingredients?.joinToString(separator = "\n")
+            socialRank.text = it.recipe?.socialRank.toString()
 
             val request = LoadRequest.Builder(requireContext())
                 .transformations(RoundedCornersTransformation(4f))
-                .data(it.networkRecipe?.imageUrl)
+                .data(it.recipe?.imageUrl)
                 .crossfade(true)
                 .target(backdrop)
                 .build()

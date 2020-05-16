@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
 import com.arjun.food2fork.databinding.FragmentRecipeListBinding
-import com.arjun.food2fork.model.network.NetworkRecipe
+import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
 import timber.log.Timber
@@ -63,7 +63,7 @@ class RecipeListFragment : BaseFragment() {
         })
 
         recipeAdapter = RecipeListAdapter(imageLoader, object : Interaction {
-            override fun onItemSelected(position: Int, item: NetworkRecipe) {
+            override fun onItemSelected(position: Int, item: Recipe) {
                 Timber.d("${item.title} at $position")
                 val action =
                     RecipeListFragmentDirections.actionRecipeListFragmentToRecipeDetailFragment(item.recipeId)
@@ -77,7 +77,7 @@ class RecipeListFragment : BaseFragment() {
             adapter = recipeAdapter
         }
 
-        viewModel.networkRecipeList.observe(viewLifecycleOwner) {
+        viewModel.recipeList.observe(viewLifecycleOwner) {
             recipeAdapter.submitList(it)
         }
         viewModel.networkState.observe(viewLifecycleOwner) {

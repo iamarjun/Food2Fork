@@ -10,7 +10,7 @@ import coil.ImageLoader
 import coil.request.LoadRequest
 import coil.transform.RoundedCornersTransformation
 import com.arjun.food2fork.R
-import com.arjun.food2fork.model.network.NetworkRecipe
+import com.arjun.food2fork.model.Recipe
 import kotlinx.android.synthetic.main.recipe_item.view.*
 
 class RecipeListViewHolder(
@@ -25,7 +25,7 @@ class RecipeListViewHolder(
     private var socialScore: AppCompatTextView = itemView.recipe_social_rating
     private var image: AppCompatImageView = itemView.recipe_image
 
-    fun bind(item: NetworkRecipe?) {
+    fun bind(item: Recipe?) {
         item?.let {recipe ->
             itemView.setOnClickListener {
                 interaction?.onItemSelected(adapterPosition, recipe)
