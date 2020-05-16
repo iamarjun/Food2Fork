@@ -37,7 +37,7 @@ class RecipeDatabaseRepository @Inject constructor(
             .setEnablePlaceholders(false)
             .build()
 
-        val livePagedList = LivePagedListBuilder(db.recipeDao.getRecipeList("%$query%"), config)
+        val livePagedList = LivePagedListBuilder(db.recipeDao.getRecipeList("%${query.toLowerCase()}%"), config)
             .setBoundaryCallback(bc)
             .build()
 

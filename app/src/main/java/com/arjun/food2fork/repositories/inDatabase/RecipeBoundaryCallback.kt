@@ -27,11 +27,11 @@ class RecipeBoundaryCallback(
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
             coroutineScope.launch(IO) {
-                when (val list = restApi.searchRecipe(query, page)) {
+
+                when (val list = restApi.searchRecipe(query, 1)) {
                     is Success -> {
                         // Handle Success
                         db.recipeDao.insertRecipeList(list.body.recipes!!)
-                        page.inc()
                         it.recordSuccess()
                     }
                     is ServerError -> {
@@ -47,6 +47,7 @@ class RecipeBoundaryCallback(
                         it.recordFailure(list.error)
                     }
                 }
+
             }
         }
     }
@@ -54,32 +55,38 @@ class RecipeBoundaryCallback(
     override fun onItemAtEndLoaded(itemAtEnd: Recipe) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             coroutineScope.launch(IO) {
-                when (val list = restApi.searchRecipe(query, page)) {
-                    is Success -> {
-                        // Handle Success
-                        db.recipeDao.insertRecipeList(list.body.recipes!!)
-                        page.inc()
+                val pageNumber = getPageNumber("%${query.toLowerCase()}%")
+
+                if (pageNumber != 0)
+                    when (val list = restApi.searchRecipe(query, pageNumber)) {
+                        is Success -> {
+                            // Handle Success
+                            db.recipeDao.insertRecipeList(list.body.recipes!!)
+                            it.recordSuccess()
+                        }
+                        is ServerError -> {
+                            Timber.d("Server Error ${list.body}")
+                            it.recordFailure(Throwable())
+                        }
+                        is NetworkError -> {
+                            Timber.d(list.error)
+                            it.recordFailure(list.error)
+                        }
+                        is UnknownError -> {
+                            Timber.d(list.error)
+                            it.recordFailure(list.error)
+                        }
                     }
-                    is ServerError -> {
-                        Timber.d("Server Error ${list.body}")
-                        it.recordFailure(Throwable())
-                    }
-                    is NetworkError -> {
-                        Timber.d(list.error)
-                        it.recordFailure(list.error)
-                    }
-                    is UnknownError -> {
-                        Timber.d(list.error)
-                        it.recordFailure(list.error)
-                    }
-                }
             }
         }
     }
 
-    companion object {
-        var page = 1
-
+     private fun getPageNumber(query: String): Int {
+        val count = db.recipeDao.getCount(query)
+        return when {
+            count%30 == 0 -> count/30 + 1
+            else -> 0
+        }
     }
 
 }

@@ -9,4 +9,5 @@
     <color name="red">#E22B2B</color>
     <color name="textColor">#808080</color>
     <color name="textColorDark">#FFFFFF</color>
+    <color name="textColorLight">#000000</color>
 </resources>

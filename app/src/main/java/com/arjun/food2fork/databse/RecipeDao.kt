@@ -15,4 +15,7 @@ interface RecipeDao {
 
     @Query("select * from recipe where lower(title) like :query order by socialRank desc")
     fun getRecipeList(query: String): DataSource.Factory<Int, Recipe>
+
+    @Query("select count(*) from recipe where lower(title) like :query")
+    fun getCount(query: String): Int
 }
