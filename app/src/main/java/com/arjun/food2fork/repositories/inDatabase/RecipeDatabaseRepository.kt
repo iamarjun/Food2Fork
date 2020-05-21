@@ -29,7 +29,7 @@ class RecipeDatabaseRepository @Inject constructor(
             ioExecutor = ioExecutor,
             restApi = restApi,
             db = db,
-            coroutineScope = scope
+            scope = scope
         )
 
         val config = PagedList.Config.Builder()
@@ -37,9 +37,10 @@ class RecipeDatabaseRepository @Inject constructor(
             .setEnablePlaceholders(false)
             .build()
 
-        val livePagedList = LivePagedListBuilder(db.recipeDao.getRecipeList("%${query.toLowerCase()}%"), config)
-            .setBoundaryCallback(bc)
-            .build()
+        val livePagedList =
+            LivePagedListBuilder(db.recipeDao.getRecipeList("%${query.toLowerCase()}%"), config)
+                .setBoundaryCallback(bc)
+                .build()
 
         return Listing(
             pagedList = livePagedList,

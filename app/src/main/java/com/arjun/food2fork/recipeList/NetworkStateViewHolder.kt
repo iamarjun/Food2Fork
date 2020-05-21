@@ -14,6 +14,7 @@ class NetworkStateViewHolder internal constructor(itemView: View) :
 
     private var errorMessage = itemView.error_msg
     private var loadingIndicator = itemView.loader
+    private var retry = itemView.retry_button
 
     fun bind(networkState: NetworkState?) {
 
@@ -23,12 +24,20 @@ class NetworkStateViewHolder internal constructor(itemView: View) :
                     progressVisibility(false)
                     errorMessage?.text = "Try Again"
                     errorMessage?.visibility = View.VISIBLE
+                    retry?.visibility = View.VISIBLE
                 }
                 Status.RUNNING -> {
                     progressVisibility(true)
+                    errorMessage?.text = ""
                     errorMessage?.visibility = View.VISIBLE
+                    retry?.visibility = View.GONE
                 }
-                else -> errorMessage?.visibility = View.GONE
+                else -> {
+                    progressVisibility(false)
+                    errorMessage?.text = ""
+                    errorMessage?.visibility = View.GONE
+                    retry?.visibility = View.GONE
+                }
             }
         }
 

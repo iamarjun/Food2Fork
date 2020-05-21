@@ -18,7 +18,7 @@ class RecipeBoundaryCallback(
     ioExecutor: Executor,
     private val restApi: RestApi,
     private val db: RecipeDb,
-    private val coroutineScope: CoroutineScope
+    private val scope: CoroutineScope
 ) : PagedList.BoundaryCallback<Recipe>() {
 
     val helper = PagingRequestHelper(ioExecutor)
@@ -26,7 +26,7 @@ class RecipeBoundaryCallback(
 
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
-            coroutineScope.launch(IO) {
+            scope.launch(IO) {
 
                 when (val list = restApi.searchRecipe(query, 1)) {
                     is Success -> {
@@ -54,7 +54,7 @@ class RecipeBoundaryCallback(
 
     override fun onItemAtEndLoaded(itemAtEnd: Recipe) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-            coroutineScope.launch(IO) {
+            scope.launch(IO) {
                 val pageNumber = getPageNumber("%${query.toLowerCase()}%")
 
                 if (pageNumber != 0)
@@ -77,6 +77,8 @@ class RecipeBoundaryCallback(
                             it.recordFailure(list.error)
                         }
                     }
+                else
+                    it.recordSuccess()
             }
         }
     }
