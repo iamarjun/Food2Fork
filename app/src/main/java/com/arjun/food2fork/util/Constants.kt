@@ -35,13 +35,14 @@ object Constants {
                 id = "",
                 imageUrl = Uri.parse("android.resource://com.arjun.food2fork/drawable/${image}")
                     .toString(),
-//                ingredients = emptyList(),
+                ingredients = emptyList(),
                 publisher = "",
                 publisherUrl = "",
                 recipeId = "",
                 socialRank = -1f,
                 sourceUrl = "",
-                title = name
+                title = name,
+                v = 0
             )
         }
     }

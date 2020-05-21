@@ -8,7 +8,7 @@ import com.arjun.food2fork.model.Recipe
 @Database(
     entities = [Recipe::class],
     exportSchema = false,
-    version = 2
+    version = 3
 )
 @TypeConverters(RecipeTypeConverter::class)
 abstract class RecipeDb : RoomDatabase() {

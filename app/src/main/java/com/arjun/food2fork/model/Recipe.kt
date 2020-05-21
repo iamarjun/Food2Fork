@@ -14,8 +14,8 @@ data class Recipe(
     var id: String,
     @Json(name = "image_url")
     var imageUrl: String?,
-//    @Json(name = "ingredients")
-//    var ingredients: List<String?>,
+    @Json(name = "ingredients")
+    var ingredients: List<String?>?,
     @Json(name = "publisher")
     var publisher: String?,
     @Json(name = "publisher_url")
@@ -27,7 +27,7 @@ data class Recipe(
     @Json(name = "source_url")
     var sourceUrl: String?,
     @Json(name = "title")
-    var title: String?
-//    @Json(name = "__v")
-//    var v: Int
+    var title: String?,
+    @Json(name = "__v")
+    var v: Int?
 )
