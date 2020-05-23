@@ -3,7 +3,6 @@ package com.arjun.food2fork.di.network
 import com.arjun.food2fork.RestApi
 import com.arjun.food2fork.di.application.ApplicationScope
 import com.arjun.food2fork.util.Constants
-import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -27,7 +26,6 @@ class NetworkModule {
             .client(okHttpClientBuilder.build())
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
 

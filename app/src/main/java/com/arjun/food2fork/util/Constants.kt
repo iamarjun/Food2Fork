@@ -41,8 +41,7 @@ object Constants {
                 recipeId = "",
                 socialRank = -1f,
                 sourceUrl = "",
-                title = name,
-                v = 0
+                title = name
             )
         }
     }

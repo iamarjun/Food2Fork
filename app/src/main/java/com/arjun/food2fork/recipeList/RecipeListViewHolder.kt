@@ -26,7 +26,7 @@ class RecipeListViewHolder(
     private var image: AppCompatImageView = itemView.recipe_image
 
     fun bind(item: Recipe?) {
-        item?.let {recipe ->
+        item?.let { recipe ->
             itemView.setOnClickListener {
                 interaction?.onItemSelected(adapterPosition, recipe)
             }

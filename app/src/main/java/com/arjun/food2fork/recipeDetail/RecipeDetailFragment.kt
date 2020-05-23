@@ -16,6 +16,8 @@ import coil.transform.RoundedCornersTransformation
 import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
 import com.arjun.food2fork.databinding.FragmentRecipeDetailBinding
+import com.arjun.food2fork.model.Recipe
+import com.arjun.food2fork.util.Resource
 import com.arjun.food2fork.util.viewBinding
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import timber.log.Timber
@@ -60,21 +62,33 @@ class RecipeDetailFragment : BaseFragment() {
         ingredients = binding.recipeIngredients
 
         viewModel.recipe.observe(viewLifecycleOwner) {
-            collapsingToolbar.title = it.recipe?.title
-//            ingredients.text = it.recipe?.ingredients?.joinToString(separator = "\n")
-            socialRank.text = it.recipe?.socialRank.toString()
 
-            val request = LoadRequest.Builder(requireContext())
-                .transformations(RoundedCornersTransformation(4f))
-                .data(it.recipe?.imageUrl)
-                .crossfade(true)
-                .target(backdrop)
-                .build()
-
-            imageLoader.execute(request)
-
+            when (it) {
+                is Resource.Loading -> {
+                }
+                is Resource.Success -> {
+                    showRecipe(it.data)
+                }
+                is Resource.Error -> {
+                }
+            }
         }
 
+    }
+
+    private fun showRecipe(recipe: Recipe?) {
+        collapsingToolbar.title = recipe?.title
+        ingredients.text = recipe?.ingredients?.joinToString(separator = "\n")
+        socialRank.text = recipe?.socialRank.toString()
+
+        val request = LoadRequest.Builder(requireContext())
+            .transformations(RoundedCornersTransformation(4f))
+            .data(recipe?.imageUrl)
+            .crossfade(true)
+            .target(backdrop)
+            .build()
+
+        imageLoader.execute(request)
     }
 
 }

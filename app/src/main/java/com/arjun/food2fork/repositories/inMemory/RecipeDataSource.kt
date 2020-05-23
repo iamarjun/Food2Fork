@@ -6,8 +6,10 @@ import androidx.paging.PageKeyedDataSource
 import com.arjun.food2fork.RestApi
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.repositories.NetworkState
-import com.haroldadmin.cnradapter.NetworkResponse
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class RecipeDataSource(private val query: String, private val restApi: RestApi) :
     PageKeyedDataSource<Int, Recipe>() {
@@ -37,37 +39,21 @@ class RecipeDataSource(private val query: String, private val restApi: RestApi) 
     ) {
         coroutineScope.launch {
             _initialLoad.postValue(NetworkState.LOADING)
-            when (val list = restApi.searchRecipe(query,
-                PAGE
-            )) {
-                is NetworkResponse.Success -> {
-                    // Handle Success
-                    retry = null
-                    _initialLoad.postValue(NetworkState.LOADED)
-                    callback.onResult(list.body.recipes!!, null, 2)
+            val list = restApi.searchRecipe(query, PAGE)
+
+            try {
+                retry = null
+                _initialLoad.postValue(NetworkState.LOADED)
+                callback.onResult(list.recipes!!, null, 2)
+            } catch (e: Exception) {
+                retry = {
+                    loadInitial(params, callback)
                 }
-                is NetworkResponse.ServerError -> {
-                    // Handle Server Error
-                    retry = {
-                        loadInitial(params, callback)
-                    }
-                    _initialLoad.postValue(
-                        NetworkState.error(
-                            "Server Error"
-                        )
+                _initialLoad.postValue(
+                    NetworkState.error(
+                        e.localizedMessage
                     )
-                }
-                is NetworkResponse.NetworkError -> {
-                    // Handle Network Error
-                    retry = {
-                        loadInitial(params, callback)
-                    }
-                    _initialLoad.postValue(
-                        NetworkState.error(
-                            "Network Error"
-                        )
-                    )
-                }
+                )
             }
         }
     }
@@ -75,35 +61,20 @@ class RecipeDataSource(private val query: String, private val restApi: RestApi) 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Recipe>) {
         coroutineScope.launch {
             _networkState.postValue(NetworkState.LOADING)
-            when (val list = restApi.searchRecipe(query, params.key)) {
-                is NetworkResponse.Success -> {
-                    // Handle Success
-                    retry = null
-                    _networkState.postValue(NetworkState.LOADED)
-                    callback.onResult(list.body.recipes!!, params.key.inc())
+            try {
+                val list = restApi.searchRecipe(query, params.key)
+                retry = null
+                _networkState.postValue(NetworkState.LOADED)
+                callback.onResult(list.recipes!!, params.key.inc())
+            } catch (e: Exception) {
+                retry = {
+                    loadAfter(params, callback)
                 }
-                is NetworkResponse.ServerError -> {
-                    // Handle Server Error
-                    retry = {
-                        loadAfter(params, callback)
-                    }
-                    _networkState.postValue(
-                        NetworkState.error(
-                            "Server Error"
-                        )
+                _networkState.postValue(
+                    NetworkState.error(
+                        e.localizedMessage
                     )
-                }
-                is NetworkResponse.NetworkError -> {
-                    // Handle Network Error
-                    retry = {
-                        loadAfter(params, callback)
-                    }
-                    _networkState.postValue(
-                        NetworkState.error(
-                            "Network Error"
-                        )
-                    )
-                }
+                )
             }
         }
     }

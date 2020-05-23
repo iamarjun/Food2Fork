@@ -7,5 +7,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class GetRecipe(
     @Json(name = "recipe")
-    var recipe: Recipe?
+    var recipe: Recipe
 )

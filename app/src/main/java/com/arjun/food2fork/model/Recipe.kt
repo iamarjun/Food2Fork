@@ -13,21 +13,19 @@ data class Recipe(
     @Json(name = "_id")
     var id: String,
     @Json(name = "image_url")
-    var imageUrl: String?,
+    var imageUrl: String,
     @Json(name = "ingredients")
-    var ingredients: List<String?>?,
+    var ingredients: List<String>?,
     @Json(name = "publisher")
-    var publisher: String?,
+    var publisher: String,
     @Json(name = "publisher_url")
-    var publisherUrl: String?,
+    var publisherUrl: String,
     @Json(name = "recipe_id")
-    var recipeId: String?,
+    var recipeId: String,
     @Json(name = "social_rank")
     var socialRank: Float,
     @Json(name = "source_url")
-    var sourceUrl: String?,
+    var sourceUrl: String,
     @Json(name = "title")
-    var title: String?,
-    @Json(name = "__v")
-    var v: Int?
+    var title: String
 )

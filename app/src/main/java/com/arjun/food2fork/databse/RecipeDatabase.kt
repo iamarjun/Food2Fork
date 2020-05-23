@@ -11,7 +11,7 @@ import com.arjun.food2fork.model.Recipe
     version = 3
 )
 @TypeConverters(RecipeTypeConverter::class)
-abstract class RecipeDb : RoomDatabase() {
+abstract class RecipeDatabase : RoomDatabase() {
     abstract val recipeDao: RecipeDao
 
     companion object {
