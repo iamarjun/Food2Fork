@@ -58,7 +58,7 @@ class RecipeDatabaseRepository @Inject constructor(
 
     fun getRecipe(recipeId: String) = object : NetworkBoundResource<Recipe, GetRecipe>() {
         override suspend fun saveNetworkResult(item: GetRecipe) {
-            item.recipe?.let { db.recipeDao.updateRecipe(it) }
+            db.recipeDao.updateRecipe(item.recipe)
         }
 
         override fun shouldFetch(data: Recipe?): Boolean = true

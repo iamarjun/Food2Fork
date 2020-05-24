@@ -30,7 +30,7 @@ class RecipeBoundaryCallback(
                 try {
                     val list = restApi.searchRecipe(query, pageNumber)
                     pageNumber++
-                    db.recipeDao.insertRecipeList(list.recipes!!)
+                    db.recipeDao.insertRecipeList(list.recipes)
                     it.recordSuccess()
 
                 } catch (e: Exception) {
@@ -44,16 +44,11 @@ class RecipeBoundaryCallback(
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             scope.launch(IO) {
 
-//                if (pageNumber != 0) {
-//
-//                } else
-//                    it.recordSuccess()
                 try {
 
                     val list = restApi.searchRecipe(query, pageNumber)
                     if (list.recipes.isNullOrEmpty()) {
-//                        list.recipes?.forEach { it.pageNo.inc() }
-                        db.recipeDao.insertRecipeList(list.recipes!!)
+                        db.recipeDao.insertRecipeList(list.recipes)
                     }
                     it.recordSuccess()
 
