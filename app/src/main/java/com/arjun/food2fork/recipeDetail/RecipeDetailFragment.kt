@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
@@ -19,7 +18,6 @@ import com.arjun.food2fork.databinding.FragmentRecipeDetailBinding
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.util.Resource
 import com.arjun.food2fork.util.viewBinding
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import timber.log.Timber
 
 class RecipeDetailFragment : BaseFragment() {
@@ -29,9 +27,9 @@ class RecipeDetailFragment : BaseFragment() {
 
     private lateinit var viewModel: RecipeDetailViewModel
     private lateinit var toolbar: Toolbar
-    private lateinit var collapsingToolbar: CollapsingToolbarLayout
+    private lateinit var title: TextView
+    private lateinit var publisherName: TextView
     private lateinit var backdrop: ImageView
-    private lateinit var socialRank: AppCompatTextView
     private lateinit var ingredients: TextView
 
 
@@ -56,9 +54,9 @@ class RecipeDetailFragment : BaseFragment() {
         Timber.d(args.recipeId)
 
         toolbar = binding.toolbar
-        collapsingToolbar = binding.collapsingToolbar
+        title = binding.title
         backdrop = binding.backdrop
-        socialRank = binding.recipeSocialRating
+        publisherName = binding.publisherName
         ingredients = binding.recipeIngredients
 
         viewModel.recipe.observe(viewLifecycleOwner) {
@@ -77,9 +75,9 @@ class RecipeDetailFragment : BaseFragment() {
     }
 
     private fun showRecipe(recipe: Recipe?) {
-        collapsingToolbar.title = recipe?.title
+        title.text = recipe?.title
         ingredients.text = recipe?.ingredients?.joinToString(separator = "\n")
-        socialRank.text = recipe?.socialRank.toString()
+        publisherName.text = "By: ${recipe?.publisher}"
 
         val request = LoadRequest.Builder(requireContext())
             .transformations(RoundedCornersTransformation(4f))
