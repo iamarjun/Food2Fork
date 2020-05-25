@@ -10,4 +10,6 @@
     <color name="textColor">#808080</color>
     <color name="textColorDark">#FFFFFF</color>
     <color name="textColorLight">#000000</color>
+    <color name="bulbColor">#FFFFFF</color>
+
 </resources>
