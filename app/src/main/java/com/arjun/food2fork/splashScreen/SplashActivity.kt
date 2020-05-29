@@ -53,4 +53,9 @@ class SplashActivity : BaseActivity() {
         })
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.splashLogo.removeAllAnimatorListeners()
+    }
 }
