@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import com.airbnb.lottie.LottieDrawable
 import com.arjun.food2fork.MainActivity
 import com.arjun.food2fork.base.BaseActivity
 import com.arjun.food2fork.databinding.SplashScreenBinding
