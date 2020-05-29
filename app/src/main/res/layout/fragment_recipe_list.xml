@@ -12,13 +12,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways" >
+            android:background="@color/splashBackground"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search"
-                app:queryHint="chicken.."
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize" />
+                android:layout_height="?actionBarSize"
+                app:queryHint="chicken.." />
 
         </androidx.appcompat.widget.Toolbar>
 

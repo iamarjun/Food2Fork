@@ -1,18 +1,21 @@
-package com.arjun.food2fork.model.network
+package com.arjun.food2fork.model
 
 
-import com.arjun.food2fork.model.database.DatabaseRecipe
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity
 @JsonClass(generateAdapter = true)
-data class NetworkRecipe(
+data class Recipe(
+    @PrimaryKey
     @Json(name = "_id")
     var id: String,
     @Json(name = "image_url")
     var imageUrl: String,
     @Json(name = "ingredients")
-    var ingredients: List<String>,
+    var ingredients: List<String>?,
     @Json(name = "publisher")
     var publisher: String,
     @Json(name = "publisher_url")
@@ -24,19 +27,5 @@ data class NetworkRecipe(
     @Json(name = "source_url")
     var sourceUrl: String,
     @Json(name = "title")
-    var title: String,
-    @Json(name = "__v")
-    var v: Int
+    var title: String
 )
-
-fun List<NetworkRecipe>.asDatabaseModel(): List<DatabaseRecipe> {
-    return map {
-        DatabaseRecipe(
-            id = it.id,
-            name = it.title,
-            publisher = it.publisher,
-            url = it.imageUrl,
-            socialRank = it.socialRank
-        )
-    }
-}
