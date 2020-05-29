@@ -2,6 +2,7 @@ package com.arjun.food2fork.splashScreen
 
 import android.animation.Animator
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import com.arjun.food2fork.MainActivity
 import com.arjun.food2fork.base.BaseActivity
@@ -17,6 +18,17 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.splashLogo.setAnimation("splash_dark.json")
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.splashLogo.setAnimation("splash_light.json")
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+            }
+        }
 
         binding.splashLogo.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
