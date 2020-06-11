@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +17,9 @@ import com.arjun.food2fork.databinding.FragmentRecipeListBinding
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class RecipeListFragment : BaseFragment() {
@@ -29,12 +32,17 @@ class RecipeListFragment : BaseFragment() {
     private lateinit var recipeList: RecyclerView
     private lateinit var searchView: SearchView
 
+    private var searchJob: Job? = null
+
+    init {
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         controllerComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProvider(this, viewModelFactory)[RecipeListViewModel::class.java]
-        viewModel.searchRecipe(args.searchQuery)
     }
 
     override fun onCreateView(
@@ -57,7 +65,7 @@ class RecipeListFragment : BaseFragment() {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.searchRecipe(it) }
+                query?.let { search(it) }
                 return false
             }
         })
@@ -71,35 +79,24 @@ class RecipeListFragment : BaseFragment() {
             }
         })
 
+        search(args.searchQuery)
+
         recipeList.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             addItemDecoration(SpacingItemDecorator(12))
             adapter = recipeAdapter
         }
 
-        viewModel.recipeList.observe(viewLifecycleOwner) {
-            recipeAdapter.submitList(it)
-        }
-        viewModel.networkState.observe(viewLifecycleOwner) {
-            recipeAdapter.setNetworkState(it)
-        }
-        viewModel.refreshState.observe(viewLifecycleOwner) {
-            recipeAdapter.setNetworkState(it)
-        }
 
-        /**
-         * Custom back press behaviour
-         */
+    }
 
-//        callback = object : OnBackPressedCallback(false) {
-//            override fun handleOnBackPressed() {
-//                recipeList.adapter = recipeCategoryAdapter
-//                isEnabled = false
-//            }
-//        }
-//
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
+    private fun search(query: String) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewModel.searchRecipe(query).collectLatest {
+                recipeAdapter.submitData(it)
+            }
+        }
     }
 
 }

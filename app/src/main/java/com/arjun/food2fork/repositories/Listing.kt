@@ -3,7 +3,7 @@ package com.arjun.food2fork.repositories
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 
-data class Listing<T>(
+data class Listing<T : Any>(
     val pagedList: LiveData<PagedList<T>>,
     val networkState: LiveData<NetworkState>, //initial state
     val refreshState: LiveData<NetworkState>, // second state, after first data loaded

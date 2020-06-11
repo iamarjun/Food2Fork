@@ -1,35 +1,30 @@
 package com.arjun.food2fork.recipeList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations.map
-import androidx.lifecycle.Transformations.switchMap
-import androidx.paging.PagedList
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.model.Recipe
-import com.arjun.food2fork.repositories.Listing
-import com.arjun.food2fork.repositories.NetworkState
-import com.arjun.food2fork.repositories.inDatabase.RecipeDatabaseRepository
+import com.arjun.food2fork.repositories.inMemory.RecipeRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class RecipeListViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) :
+class RecipeListViewModel @Inject constructor(private val repo: RecipeRepository) :
     BaseViewModel() {
 
-    private val query by lazy { MutableLiveData<String>() }
-    private val listing: LiveData<Listing<Recipe>>
+    private var currentQueryValue: String? = null
 
-    val recipeList: LiveData<PagedList<Recipe>> // the recipe data to be observed
-    val networkState: LiveData<NetworkState>
-    val refreshState: LiveData<NetworkState> //the network states
+    private var currentSearchResult: Flow<PagingData<Recipe>>? = null
 
-    init {
-        listing = map(query) { repo.getRecipeList(it) }
-        recipeList = switchMap(listing) { it.pagedList }
-        networkState = switchMap(listing) { it.networkState }
-        refreshState = switchMap(listing) { it.refreshState }
-    }
-
-    fun searchRecipe(query: String) {
-        this.query.value = query
+    fun searchRecipe(queryString: String): Flow<PagingData<Recipe>> {
+        val lastResult = currentSearchResult
+        if (queryString == currentQueryValue && lastResult != null) {
+            return lastResult
+        }
+        currentQueryValue = queryString
+        val newResult: Flow<PagingData<Recipe>> = repo.recipeList(queryString)
+            .cachedIn(viewModelScope)
+        currentSearchResult = newResult
+        return newResult
     }
 }
