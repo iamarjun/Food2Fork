@@ -5,11 +5,11 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.model.Recipe
-import com.arjun.food2fork.repositories.inMemory.RecipeRepository
+import com.arjun.food2fork.repositories.inDatabase.RecipeDatabaseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class RecipeListViewModel @Inject constructor(private val repo: RecipeRepository) :
+class RecipeListViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) :
     BaseViewModel() {
 
     private var currentQueryValue: String? = null
