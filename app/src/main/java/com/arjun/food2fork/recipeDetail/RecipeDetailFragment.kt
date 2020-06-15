@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
@@ -18,14 +19,16 @@ import com.arjun.food2fork.databinding.FragmentRecipeDetailBinding
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.util.Resource
 import com.arjun.food2fork.util.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class RecipeDetailFragment : BaseFragment() {
 
     private val binding: FragmentRecipeDetailBinding by viewBinding(FragmentRecipeDetailBinding::bind)
     private val args: RecipeDetailFragmentArgs by navArgs()
 
-    private lateinit var viewModel: RecipeDetailViewModel
+    private val viewModel: RecipeDetailViewModel by viewModels()
     private lateinit var toolbar: Toolbar
     private lateinit var title: TextView
     private lateinit var publisherName: TextView
@@ -34,10 +37,8 @@ class RecipeDetailFragment : BaseFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        controllerComponent.inject(this)
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[RecipeDetailViewModel::class.java]
         viewModel.getRecipe(args.recipeId)
     }
 

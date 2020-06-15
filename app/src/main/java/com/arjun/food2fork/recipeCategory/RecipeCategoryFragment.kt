@@ -18,7 +18,9 @@ import com.arjun.food2fork.recipeList.Interaction
 import com.arjun.food2fork.util.Constants
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeCategoryFragment : BaseFragment() {
 
     private val binding: FragmentRecipeCategoryBinding by viewBinding(FragmentRecipeCategoryBinding::bind)
@@ -29,7 +31,6 @@ class RecipeCategoryFragment : BaseFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        controllerComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
 

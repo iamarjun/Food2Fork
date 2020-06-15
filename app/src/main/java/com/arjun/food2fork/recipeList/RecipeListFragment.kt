@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -21,17 +22,19 @@ import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.toVisibility
 import com.arjun.food2fork.util.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@AndroidEntryPoint
 class RecipeListFragment : BaseFragment() {
 
     private val binding: FragmentRecipeListBinding by viewBinding(FragmentRecipeListBinding::bind)
     private val args: RecipeListFragmentArgs by navArgs()
 
-    private lateinit var viewModel: RecipeListViewModel
+    private val viewModel: RecipeListViewModel by viewModels()
     private lateinit var recipeAdapter: RecipeListAdapter
     private lateinit var recipeList: RecyclerView
     private lateinit var searchView: SearchView
@@ -44,10 +47,7 @@ class RecipeListFragment : BaseFragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        controllerComponent.inject(this)
         super.onCreate(savedInstanceState)
-
-        viewModel = ViewModelProvider(this, viewModelFactory)[RecipeListViewModel::class.java]
     }
 
     override fun onCreateView(
