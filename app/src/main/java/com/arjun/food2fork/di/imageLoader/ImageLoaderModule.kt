@@ -3,15 +3,17 @@ package com.arjun.food2fork.di.imageLoader
 import android.app.Application
 import coil.ImageLoader
 import coil.util.CoilUtils
-import com.arjun.food2fork.di.application.ApplicationScope
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 
 @Module
+@InstallIn(ApplicationComponent::class)
 class ImageLoaderModule {
 
-    @ApplicationScope
+
     @Provides
     fun provideImageLoader(
         application: Application,

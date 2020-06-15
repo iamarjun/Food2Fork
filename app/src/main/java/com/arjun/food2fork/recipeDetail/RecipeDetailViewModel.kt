@@ -1,14 +1,14 @@
 package com.arjun.food2fork.recipeDetail
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.repositories.inDatabase.RecipeDatabaseRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
-import javax.inject.Inject
 
-class RecipeDetailViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) : BaseViewModel() {
+class RecipeDetailViewModel @ViewModelInject constructor(private val repo: RecipeDatabaseRepository) :
+    BaseViewModel() {
 
     private val _recipeId by lazy { MutableLiveData<String>() }
 
@@ -16,7 +16,7 @@ class RecipeDetailViewModel @Inject constructor(private val repo: RecipeDatabase
         println("Caught $exception")
     }
 
-//    val recipe: LiveData<GetRecipe> = _recipeId.switchMap { recipeId ->
+    //    val recipe: LiveData<GetRecipe> = _recipeId.switchMap { recipeId ->
 //        liveData(handler) {
 //            val recipe = restApi.getRecipe(recipeId)
 //
