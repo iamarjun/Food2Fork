@@ -94,7 +94,7 @@ class RecipeListFragment : BaseFragment() {
             if (loadState.refresh !is LoadState.NotLoading) {
                 // We're refreshing: either loading or we had an error
                 // So we can hide the list
-                binding.recipeList.visibility = View.GONE
+//                binding.recipeList.visibility = View.GONE
                 binding.progressBar.visibility = toVisibility(loadState.refresh is LoadState.Loading)
                 binding.retryButton.visibility = toVisibility(loadState.refresh is LoadState.Error)
             } else {
