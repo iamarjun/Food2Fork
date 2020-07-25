@@ -25,7 +25,7 @@ class RecipeDatabaseRepository @Inject constructor(
 
         Timber.d("New query: $query")
         return Pager(
-            config = PagingConfig(pageSize = 30),
+            config = PagingConfig(pageSize = 1, enablePlaceholders = false),
             remoteMediator = RecipeRemoteMediator(
                 query,
                 restApi,
