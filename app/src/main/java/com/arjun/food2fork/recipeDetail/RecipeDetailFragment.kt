@@ -29,7 +29,6 @@ class RecipeDetailFragment : BaseFragment() {
     private val args: RecipeDetailFragmentArgs by navArgs()
 
     private val viewModel: RecipeDetailViewModel by viewModels()
-    private lateinit var toolbar: Toolbar
     private lateinit var title: TextView
     private lateinit var publisherName: TextView
     private lateinit var backdrop: ImageView
@@ -54,7 +53,6 @@ class RecipeDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d(args.recipeId)
 
-        toolbar = binding.toolbar
         title = binding.title
         backdrop = binding.backdrop
         publisherName = binding.publisherName

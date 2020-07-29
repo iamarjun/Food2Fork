@@ -28,7 +28,7 @@ class HorizontalDottedProgress : View {
     private var mDotPosition = 0
     private var mDotCount = DEF_COUNT
     private var mTimeout = DEF_TIMEOUT
-    private var mDotColor: Int = ContextCompat.getColor(context, R.color.colorAccent)
+    private var mDotColor: Int = ContextCompat.getColor(context, R.color.secondaryColor)
 
     constructor(context: Context?) : super(context) {
         initDotSize()

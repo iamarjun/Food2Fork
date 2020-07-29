@@ -8,20 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/splashBackground"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:queryHint="chicken.." />
-
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:menu="@menu/search"
+            app:title="@string/app_name" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
