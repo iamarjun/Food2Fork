@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +17,7 @@ import com.arjun.food2fork.recipeList.Interaction
 import com.arjun.food2fork.util.Constants
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
+import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,12 +27,7 @@ class RecipeCategoryFragment : BaseFragment() {
 
     private lateinit var recipeCategoryAdapter: RecipeCategoryAdapter
     private lateinit var recipeCategory: RecyclerView
-    private lateinit var themeToggle: ImageView
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var toolbar: MaterialToolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +41,9 @@ class RecipeCategoryFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recipeCategory = binding.recipeCategory
-        themeToggle = binding.themeToggle
+        toolbar = binding.toolbar
 
-        themeToggle.setOnClickListener {
+        toolbar.setOnMenuItemClickListener {
             val mode =
                 if ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
                     Configuration.UI_MODE_NIGHT_NO
@@ -59,8 +54,11 @@ class RecipeCategoryFragment : BaseFragment() {
                 }
 
             // Change UI Mode
-            AppCompatDelegate.setDefaultNightMode(mode)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            false
         }
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         recipeCategoryAdapter =
             RecipeCategoryAdapter(
@@ -78,7 +76,7 @@ class RecipeCategoryFragment : BaseFragment() {
 
         recipeCategory.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            addItemDecoration(SpacingItemDecorator(12))
+            addItemDecoration(SpacingItemDecorator(0))
             adapter = recipeCategoryAdapter
         }
 

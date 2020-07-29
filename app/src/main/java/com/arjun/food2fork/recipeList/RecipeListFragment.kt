@@ -21,6 +21,7 @@ import com.arjun.food2fork.databinding.FragmentRecipeListBinding
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
+import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -36,7 +37,7 @@ class RecipeListFragment : BaseFragment() {
     private val viewModel: RecipeListViewModel by viewModels()
     private lateinit var recipeAdapter: RecipeListAdapter
     private lateinit var recipeList: RecyclerView
-    private lateinit var searchView: SearchView
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var retry: Button
 
     private var searchJob: Job? = null
@@ -53,19 +54,29 @@ class RecipeListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recipeList = binding.recipeList
-        searchView = binding.search
+        toolbar = binding.toolbar
         retry = binding.retryButton
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+        toolbar.setOnMenuItemClickListener {
+            val searchView = it.actionView as SearchView
+            searchView.apply {
+                queryHint = "Chicken..."
+
             }
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { search(it) }
-                return false
-            }
-        })
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let { search(it) }
+                    return false
+                }
+            })
+            false
+        }
+
 
         recipeAdapter = RecipeListAdapter(imageLoader, object : Interaction {
             override fun onItemSelected(position: Int, item: Recipe) {
