@@ -54,11 +54,9 @@ class RecipeCategoryFragment : BaseFragment() {
                 }
 
             // Change UI Mode
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            AppCompatDelegate.setDefaultNightMode(mode)
             false
         }
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         recipeCategoryAdapter =
             RecipeCategoryAdapter(
