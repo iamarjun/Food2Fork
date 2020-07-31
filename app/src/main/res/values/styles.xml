@@ -154,20 +154,18 @@
     <!-- Toolbar -->
 
     <style name="ToolbarAppearance" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="popupTheme">@style/ToolbarAppearanceOverlay</item>
-        <item name="theme">@style/ToolbarAppearanceOverlay</item>
+        <item name="materialThemeOverlay">@style/ToolbarAppearanceOverlay</item>
     </style>
 
     <!-- For widgets on Toolbar -->
 
     <style name="ToolbarAppearanceOverlay">
-        <item name="colorOnPrimary">?colorOnPrimary</item>
         <item name="android:textColorPrimary">?colorOnPrimary</item>
         <item name="colorControlNormal">?colorOnPrimary</item>
-        <item name="closeIconTint">?colorOnPrimary</item>
-        <item name="homeAsUpIndicator">?colorOnPrimary</item>
         <item name="colorControlHighlight">?colorOnPrimary</item>
         <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
+
+    <!-- You can replace ?colorOnPrimary with any other you like -->
 
 </resources>
