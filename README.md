@@ -8,7 +8,7 @@ It simply loads **Posts** data from API and stores it in persistence storage (i.
 - Clean and Simple Material UI.
 - It supports dark theme too 🌗.
 
-*API is used in this app.(https://recipesapi.herokuapp.com/api/search?q=chicken)*.
+*API used in this app.(https://recipesapi.herokuapp.com/api/search?q=chicken)*.
 
 ## Screenshots
 <img src="https://github.com/iamarjun/Food2Fork/blob/master/screenshots/Screenshot_20200904-130523.png" width="300" >
@@ -19,7 +19,6 @@ It simply loads **Posts** data from API and stores it in persistence storage (i.
 <img src="https://github.com/iamarjun/Food2Fork/blob/master/screenshots/Screenshot_20200904-130620.png" width="300" >
 <img src="https://github.com/iamarjun/Food2Fork/blob/master/screenshots/Screenshot_20200904-130627.png" width="300" >
 <img src="https://github.com/iamarjun/Food2Fork/blob/master/screenshots/Screenshot_20200904-130642.png" width="300" >
-<img src="https://github.com/iamarjun/Covid19Tracker/blob/master/screenshots/Screenshot_20200904-124719.png" width="300" >
 
 
 ## Built With 🛠
