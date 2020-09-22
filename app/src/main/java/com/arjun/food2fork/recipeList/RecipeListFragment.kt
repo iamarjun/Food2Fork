@@ -94,7 +94,6 @@ class RecipeListFragment : BaseFragment() {
 
         recipeAdapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.
-            recipeList.isVisible = loadState.source.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
