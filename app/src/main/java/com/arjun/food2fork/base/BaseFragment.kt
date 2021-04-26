@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 abstract class BaseFragment : Fragment() {
 
-    @Inject
-    internal lateinit var imageLoader: ImageLoader
 
 }

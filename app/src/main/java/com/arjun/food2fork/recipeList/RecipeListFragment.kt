@@ -78,7 +78,7 @@ class RecipeListFragment : BaseFragment() {
         }
 
 
-        recipeAdapter = RecipeListAdapter(imageLoader, object : Interaction {
+        recipeAdapter = RecipeListAdapter(object : Interaction {
             override fun onItemSelected(position: Int, item: Recipe) {
                 Timber.d("${item.title} at $position")
                 val action =
@@ -94,10 +94,11 @@ class RecipeListFragment : BaseFragment() {
 
         recipeAdapter.addLoadStateListener { loadState ->
             // Only show the list if refresh succeeds.
+            binding.recipeList.isVisible = loadState.mediator?.refresh is LoadState.NotLoading
             // Show loading spinner during initial load or refresh.
-            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
             // Show the retry state if initial load or refresh fails.
-            retry.isVisible = loadState.source.refresh is LoadState.Error
+            binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error
 
             // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
             val errorState = loadState.source.append as? LoadState.Error

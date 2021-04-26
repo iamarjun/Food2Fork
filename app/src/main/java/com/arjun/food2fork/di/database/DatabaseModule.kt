@@ -6,11 +6,11 @@ import com.arjun.food2fork.databse.RecipeDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn(ApplicationComponent::class)
-class DatabaseModule {
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
     @Provides
     fun provideDatabase(application: Application): RecipeDatabase =
         Room.databaseBuilder(application, RecipeDatabase::class.java, RecipeDatabase.DATABASE_NAME)

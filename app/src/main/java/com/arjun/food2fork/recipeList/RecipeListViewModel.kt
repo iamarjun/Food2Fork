@@ -1,15 +1,17 @@
 package com.arjun.food2fork.recipeList
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.repositories.inDatabase.RecipeDatabaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class RecipeListViewModel @ViewModelInject constructor(private val repo: RecipeDatabaseRepository) :
+@HiltViewModel
+class RecipeListViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) :
     BaseViewModel() {
 
     private var currentQueryValue: String? = null

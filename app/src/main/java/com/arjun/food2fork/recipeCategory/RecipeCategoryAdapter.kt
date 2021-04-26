@@ -8,14 +8,12 @@ import com.arjun.food2fork.recipeList.Interaction
 
 class RecipeCategoryAdapter(
     private val list: List<Recipe>,
-    private val imageLoader: ImageLoader,
     private val interaction: Interaction
 ) : RecyclerView.Adapter<RecipeCategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeCategoryViewHolder {
         return RecipeCategoryViewHolder.create(
             parent,
-            imageLoader,
             interaction
         )
     }

@@ -1,13 +1,15 @@
 package com.arjun.food2fork.recipeDetail
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.repositories.inDatabase.RecipeDatabaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import javax.inject.Inject
 
-class RecipeDetailViewModel @ViewModelInject constructor(private val repo: RecipeDatabaseRepository) :
+@HiltViewModel
+class RecipeDetailViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) :
     BaseViewModel() {
 
     private val _recipeId by lazy { MutableLiveData<String>() }

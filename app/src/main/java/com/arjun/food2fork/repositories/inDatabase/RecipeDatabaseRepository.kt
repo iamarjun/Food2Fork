@@ -1,6 +1,7 @@
 package com.arjun.food2fork.repositories.inDatabase
 
 import androidx.lifecycle.LiveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -19,6 +20,7 @@ class RecipeDatabaseRepository @Inject constructor(
 ) {
 
 
+    @OptIn(ExperimentalPagingApi::class)
     fun recipeList(query: String): Flow<PagingData<Recipe>> {
 
         val pagingSourceFactory = { db.recipeDao.getRecipeList(query) }

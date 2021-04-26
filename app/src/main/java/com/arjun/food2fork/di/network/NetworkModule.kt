@@ -5,14 +5,14 @@ import com.arjun.food2fork.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
-@InstallIn(ApplicationComponent::class)
-class NetworkModule {
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
 
 
     @Provides

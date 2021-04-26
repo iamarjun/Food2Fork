@@ -17,17 +17,12 @@ import com.arjun.food2fork.recipeList.Interaction
 import com.arjun.food2fork.util.Constants
 import com.arjun.food2fork.util.SpacingItemDecorator
 import com.arjun.food2fork.util.viewBinding
-import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecipeCategoryFragment : BaseFragment() {
 
     private val binding: FragmentRecipeCategoryBinding by viewBinding(FragmentRecipeCategoryBinding::bind)
-
-    private lateinit var recipeCategoryAdapter: RecipeCategoryAdapter
-    private lateinit var recipeCategory: RecyclerView
-    private lateinit var toolbar: MaterialToolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,42 +35,40 @@ class RecipeCategoryFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recipeCategory = binding.recipeCategory
-        toolbar = binding.toolbar
+        with(binding) {
 
-        toolbar.setOnMenuItemClickListener {
-            val mode =
-                if ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
-                    Configuration.UI_MODE_NIGHT_NO
-                ) {
-                    AppCompatDelegate.MODE_NIGHT_YES
-                } else {
-                    AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-                }
-
-            // Change UI Mode
-            AppCompatDelegate.setDefaultNightMode(mode)
-            false
-        }
-
-        recipeCategoryAdapter =
-            RecipeCategoryAdapter(
-                Constants.getCategoryList(), imageLoader,
-                object : Interaction {
-                    override fun onItemSelected(position: Int, item: Recipe) {
-                        val action =
-                            RecipeCategoryFragmentDirections.actionRecipeCategoryFragmentToRecipeListFragment(
-                                item.title
-                            )
-
-                        requireView().findNavController().navigate(action)
+            toolbar.setOnMenuItemClickListener {
+                val mode =
+                    if ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+                        Configuration.UI_MODE_NIGHT_NO
+                    ) {
+                        AppCompatDelegate.MODE_NIGHT_YES
+                    } else {
+                        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
                     }
-                })
 
-        recipeCategory.apply {
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            addItemDecoration(SpacingItemDecorator(0))
-            adapter = recipeCategoryAdapter
+                // Change UI Mode
+                AppCompatDelegate.setDefaultNightMode(mode)
+                false
+            }
+
+
+            recipeCategory.apply {
+                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                addItemDecoration(SpacingItemDecorator(0))
+                adapter = RecipeCategoryAdapter(
+                    Constants.getCategoryList(),
+                    object : Interaction {
+                        override fun onItemSelected(position: Int, item: Recipe) {
+                            val action =
+                                RecipeCategoryFragmentDirections.actionRecipeCategoryFragmentToRecipeListFragment(
+                                    item.title
+                                )
+
+                            requireView().findNavController().navigate(action)
+                        }
+                    })
+            }
         }
 
     }

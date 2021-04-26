@@ -1,62 +1,50 @@
 package com.arjun.food2fork.recipeCategory
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import coil.request.LoadRequest
+import coil.load
 import coil.transform.CircleCropTransformation
-import com.arjun.food2fork.R
+import com.arjun.food2fork.databinding.RecipeCategoryItemBinding
 import com.arjun.food2fork.model.Recipe
 import com.arjun.food2fork.recipeList.Interaction
-import kotlinx.android.synthetic.main.recipe_category_item.view.*
 
 class RecipeCategoryViewHolder(
-    itemView: View,
-    private val imageLoader: ImageLoader,
+    private val binding: RecipeCategoryItemBinding,
     private val interaction: Interaction?
-) : RecyclerView.ViewHolder(itemView) {
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private var title: AppCompatTextView = itemView.recipe_category_title
-    private var image: AppCompatImageView = itemView.recipe_category_image
 
     fun bind(item: Recipe?) {
-        item?.let {recipe ->
-            itemView.setOnClickListener {
-                interaction?.onItemSelected(adapterPosition, recipe)
+        with(binding) {
+            item?.let { recipe ->
+                root.setOnClickListener {
+                    interaction?.onItemSelected(adapterPosition, recipe)
+                }
+
+                recipeCategoryImage.load(recipe.imageUrl) {
+                    transformations(CircleCropTransformation())
+                    crossfade(true)
+                }
+
+
+                recipeCategoryTitle.text = recipe.title
             }
-
-            val request = LoadRequest.Builder(itemView.context)
-                .transformations(CircleCropTransformation())
-                .data(recipe.imageUrl)
-                .crossfade(true)
-                .target(image)
-                .build()
-
-            imageLoader.execute(request)
-
-            title.text = recipe.title
         }
-    }
 
-    fun unbind() {
-        imageLoader.shutdown()
     }
 
     companion object {
         fun create(
             parent: ViewGroup,
-            imageLoader: ImageLoader,
             interaction: Interaction?
         ): RecipeCategoryViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.recipe_category_item, parent, false)
             return RecipeCategoryViewHolder(
-                view,
-                imageLoader,
+                RecipeCategoryItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
                 interaction
             )
         }

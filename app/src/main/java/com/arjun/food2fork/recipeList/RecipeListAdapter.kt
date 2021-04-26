@@ -7,18 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import com.arjun.food2fork.R
 import com.arjun.food2fork.model.Recipe
-import com.arjun.food2fork.repositories.NetworkState
 
 class RecipeListAdapter(
-    private val imageLoader: ImageLoader,
     private val interaction: Interaction?
 ) :
     PagingDataAdapter<Recipe, RecyclerView.ViewHolder>(diffCallback) {
 
-    private var networkState: NetworkState? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return RecipeListViewHolder.create(parent, imageLoader, interaction)
+        return RecipeListViewHolder.create(parent, interaction)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -41,12 +38,6 @@ class RecipeListAdapter(
         return R.layout.recipe_item
     }
 
-    override fun getItemCount(): Int = super.getItemCount() + if (hasExtraRow()) 1 else 0
-
-
-    private fun hasExtraRow(): Boolean {
-        return networkState != null && networkState !== NetworkState.LOADED
-    }
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Recipe>() {

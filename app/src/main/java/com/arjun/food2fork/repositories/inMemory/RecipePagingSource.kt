@@ -1,6 +1,7 @@
 package com.arjun.food2fork.repositories.inMemory
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.arjun.food2fork.RestApi
 import com.arjun.food2fork.model.Recipe
 import retrofit2.HttpException
@@ -30,9 +31,16 @@ class RecipePagingSource(private val query: String, private val restApi: RestApi
             return LoadResult.Error(exception)
         }
     }
-    
+
     companion object {
         private const val PAGE = 1
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Recipe>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
 }

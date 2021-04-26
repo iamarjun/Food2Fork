@@ -4,14 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
-import coil.request.LoadRequest
+import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.arjun.food2fork.R
 import com.arjun.food2fork.base.BaseFragment
@@ -29,10 +24,6 @@ class RecipeDetailFragment : BaseFragment() {
     private val args: RecipeDetailFragmentArgs by navArgs()
 
     private val viewModel: RecipeDetailViewModel by viewModels()
-    private lateinit var title: TextView
-    private lateinit var publisherName: TextView
-    private lateinit var backdrop: ImageView
-    private lateinit var ingredients: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +44,6 @@ class RecipeDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d(args.recipeId)
 
-        title = binding.title
-        backdrop = binding.backdrop
-        publisherName = binding.publisherName
-        ingredients = binding.recipeIngredients
 
         viewModel.recipe.observe(viewLifecycleOwner) {
 
@@ -74,18 +61,20 @@ class RecipeDetailFragment : BaseFragment() {
     }
 
     private fun showRecipe(recipe: Recipe?) {
-        title.text = recipe?.title
-        ingredients.text = recipe?.ingredients?.joinToString(separator = "\n")
-        publisherName.text = "By: ${recipe?.publisher}"
+        with(binding) {
+            title.text = recipe?.title
+            ingredients.text = recipe?.ingredients?.joinToString(separator = "\n")
+            publisherName.text = "By: ${recipe?.publisher}"
 
-        val request = LoadRequest.Builder(requireContext())
-            .transformations(RoundedCornersTransformation(4f))
-            .data(recipe?.imageUrl)
-            .crossfade(true)
-            .target(backdrop)
-            .build()
 
-        imageLoader.execute(request)
+            backdrop.load(recipe?.imageUrl) {
+                transformations(RoundedCornersTransformation(4f))
+                data(recipe?.imageUrl)
+                crossfade(true)
+            }
+
+        }
     }
+
 
 }
