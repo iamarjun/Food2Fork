@@ -82,7 +82,7 @@ dependencies {
 
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
 
     //Hilt
     implementation "com.google.dagger:hilt-android:2.35.1"
