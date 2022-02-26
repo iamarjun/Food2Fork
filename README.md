@@ -1,3 +1,5 @@
+![example workflow](https://github.com/iamarjun/Food2Fork/actions/workflows/android.yml/badge.svg)
+
 # Food2Fork 🍲 
 
 **Food2Fork** is a sample food blog 🍲 Android application 📱 built to demonstrate use of *Modern Android development* tools.
