@@ -1,6 +1,7 @@
 package com.arjun.food2fork.recipeDetail
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.switchMap
 import com.arjun.food2fork.base.BaseViewModel
 import com.arjun.food2fork.repositories.inDatabase.RecipeDatabaseRepository
@@ -9,10 +10,13 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeDetailViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) :
+class RecipeDetailViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val repo: RecipeDatabaseRepository
+) :
     BaseViewModel() {
 
-    private val _recipeId by lazy { MutableLiveData<String>() }
+    private val _recipeId: MutableLiveData<String> by lazy { savedStateHandle.getLiveData("recipe_id") }
 
     private val handler = CoroutineExceptionHandler { context, exception ->
         println("Caught $exception")

@@ -1,5 +1,6 @@
 package com.arjun.food2fork.recipeList
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -11,7 +12,10 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeListViewModel @Inject constructor(private val repo: RecipeDatabaseRepository) :
+class RecipeListViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val repo: RecipeDatabaseRepository
+) :
     BaseViewModel() {
 
     private var currentQueryValue: String? = null
